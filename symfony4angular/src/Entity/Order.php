@@ -2,10 +2,10 @@
 
 namespace App\Entity;
 
-use App\Repository\DevRepository;
+use App\Repository\OrderRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: DevRepository::class)]
+#[ORM\Entity(repositoryClass: OrderRepository::class)]
 class Order
 {
     #[ORM\Id]
