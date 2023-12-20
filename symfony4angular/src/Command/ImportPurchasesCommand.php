@@ -9,7 +9,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
 
-class ImportOrdersCommand extends Command
+class ImportPurchasesCommand extends Command
 {
     private EntityManagerInterface $entityManager;
 
@@ -23,9 +23,9 @@ class ImportOrdersCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setName('app:import-orders')
-            ->setDescription('Import orders from orders.json')
-            ->addArgument('file', InputArgument::REQUIRED, 'Path to orders.json file');
+            ->setName('app:import-purchases')
+            ->setDescription('Import purchases from purchases.json')
+            ->addArgument('file', InputArgument::REQUIRED, 'Path to purchases.json file');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -35,8 +35,8 @@ class ImportOrdersCommand extends Command
 
         foreach ($purchasesData as $purchaseData) {
             $purchase = new Purchase();
-            // Configure the Purchase entity properties based on $purchaseData
-            // For example: $purchase->setCustomer($purchaserData['customer']);
+            $purchase->setCustomer($purchaseData['customer']);
+            $purchase->setStatus($purchaseData['status']);
 
             $this->entityManager->persist($purchase);
         }
