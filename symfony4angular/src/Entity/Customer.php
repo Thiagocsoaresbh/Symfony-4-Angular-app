@@ -21,12 +21,12 @@ class Customer
     #[ORM\Column(length: 255)]
     private ?string $email = null;
 
-    #[ORM\OneToMany(targetEntity: Order::class, mappedBy: "customer")]
-    private Collection $orders;
+    #[ORM\OneToMany(targetEntity: Purchase::class, mappedBy: "customer")]
+    private Collection $purchases;
 
     public function __construct()
     {
-        $this->orders = new ArrayCollection();
+        $this->purchases = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -59,10 +59,10 @@ class Customer
     }
 
     /**
-     * @return Collection|Order[]
+     * @return Collection|Purchase[]
      */
-    public function getOrders(): Collection
+    public function getPurchases(): Collection
     {
-        return $this->orders;
+        return $this->purchases;
     }
 }
