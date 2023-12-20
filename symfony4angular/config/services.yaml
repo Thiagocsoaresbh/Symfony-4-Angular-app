@@ -24,8 +24,7 @@ services:
         arguments:
             $entityManager: '@doctrine.orm.entity_manager'
         tags:
-            - { name: 'console.command', command: 'ImportPurchasesCommand' }
-
+            - { name: 'console.command' }
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
