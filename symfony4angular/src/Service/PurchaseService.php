@@ -17,22 +17,43 @@ class PurchaseService
         $this->entityManager = $entityManager;
     }
 
-    public function createPurchase(array $purchaseData): Purchase
+    public function createPurchase(array $purchaseData): ?Purchase
     {
+        // Validations do graant that all necessary fields are there
+        $requiredFields = ['customer', 'status', 'date', 'address1', 'city', 'postcode', 'country', 'amount'];
+        foreach ($requiredFields as $field) {
+            if (!isset($purchaseData[$field])) {
+                throw new \InvalidArgumentException("Campo '$field' ausente nos dados de compra.");
+            }
+        }
+
+        // Validation to date format
+        try {
+            $date = new \DateTime($purchaseData['date']);
+        } catch (\Exception $e) {
+            throw new \InvalidArgumentException("Formato de data inválido: {$purchaseData['date']}");
+        }
+
+        // Creatinf the Entity Purchase
         $purchase = new Purchase();
         $purchase->setCustomer($purchaseData['customer']);
         $purchase->setStatus($purchaseData['status']);
-        $purchase->setDate(new \DateTime($purchaseData['date']));
+        $purchase->setDate($date);
         $purchase->setAddress($purchaseData['address1']);
         $purchase->setCity($purchaseData['city']);
         $purchase->setPostcode($purchaseData['postcode']);
         $purchase->setCountry($purchaseData['country']);
         $purchase->setAmount($purchaseData['amount']);
 
-        $this->entityManager->persist($purchase);
-        $this->entityManager->flush();
-
-        return $purchase;
+        // Tente persistir e trate erros
+        try {
+            $this->entityManager->persist($purchase);
+            $this->entityManager->flush();
+            return $purchase;
+        } catch (\Exception $e) {
+            // Adicione tratamento de erro aqui
+            return null;
+        }
     }
 
     public function updatePurchaseStatus(Purchase $purchase, string $newStatus): void
