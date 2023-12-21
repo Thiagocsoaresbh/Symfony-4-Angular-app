@@ -13,10 +13,15 @@ class PurchaseController extends AbstractController
     private PurchaseService $purchaseService;
     private const CREATE_PURCHASE_ROUTE = '/create-purchase';
     private const UPDATE_PURCHASE_STATUS_ROUTE = '/update-purchase-status/{purchaseId}/{newStatus}';
-    private const LIST_PURCHASES_ROUTE = '/list-purchases';
+    private const LIST_PURCHASES_ROUTE = '/purchase/list_purchases';  // Corrigido aqui
+
+    public function __construct(PurchaseService $purchaseService)
+    {
+        $this->purchaseService = $purchaseService;
+    }
 
     #[Route(self::CREATE_PURCHASE_ROUTE, name: 'create_purchase')]
-    public function createPurchase(PurchaseService $purchaseService): Response
+    public function createPurchase(): Response
     {
         $purchaseAttributes = [
             'customer' => 'Aphrodite Olson',
@@ -29,27 +34,26 @@ class PurchaseController extends AbstractController
             'amount' => 4869,
         ];
 
-        $purchase = $purchaseService->createPurchase($purchaseAttributes);
+        $purchase = $this->purchaseService->createPurchase($purchaseAttributes);
 
         return $this->json(['message' => 'Purchase created successfully', 'purchase_id' => $purchase->getId()]);
     }
 
     #[Route(self::UPDATE_PURCHASE_STATUS_ROUTE, name: 'update_purchase_status')]
-    public function updatePurchaseStatus(PurchaseService $purchaseService, int $purchaseId, string $newStatus): Response
+    public function updatePurchaseStatus(int $purchaseId, string $newStatus): Response
     {
-        $purchase = $purchaseService->getPurchaseById($purchaseId);
+        $purchase = $this->purchaseService->getPurchaseById($purchaseId);
 
         if (!$purchase) {
             return $this->json(['error' => 'Purchase not found'], Response::HTTP_NOT_FOUND);
         }
 
-        $purchaseService->updatePurchaseStatus($purchase, $newStatus);
+        $this->purchaseService->updatePurchaseStatus($purchase, $newStatus);
 
         return $this->json(['message' => 'Purchase status updated successfully']);
     }
 
-
-    #[Route('/list-purchases', name: 'list_purchases')]
+    #[Route(self::LIST_PURCHASES_ROUTE, name: 'list_purchases')]
     public function listPurchases(Request $request): Response
     {
         $page = $request->query->getInt('page', 1);

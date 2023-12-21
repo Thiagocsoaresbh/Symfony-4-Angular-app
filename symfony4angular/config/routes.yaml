@@ -3,3 +3,15 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
+    
+create_purchase:
+    path: /purchase/create_purchase
+    controller: App\Controller\PurchaseController::createPurchase
+
+list_purchases:
+    path: /purchase/list_purchases
+    controller: App\Controller\PurchaseController::listPurchases
+
+update_purchase_status:
+    path: /purchase/update_purchase_status/{purchaseId}/{newStatus}
+    controller: App\Controller\PurchaseController::updatePurchaseStatus
