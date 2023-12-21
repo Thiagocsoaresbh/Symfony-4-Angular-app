@@ -21,5 +21,5 @@ class CustomerRepository extends ServiceEntityRepository
         parent::__construct($registry, Customer::class);
     }
 
-    // Métodos personalizados podem ser adicionados aqui, se necessário
+    // Another csutom methods if you wanted it
 }

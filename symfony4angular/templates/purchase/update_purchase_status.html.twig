@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Update Purchase Status{% endblock %}
+
+{% block body %}
+    <h1>Update Status of your Purchase</h1>
+
+    <form action="{{ path('update_purchase_status', {'purchaseId': purchase.id}) }}" method="post">
+        <label for="newStatus">New Status:</label>
+        <input type="text" id="newStatus" name="newStatus" required>
+
+        <button type="submit">Update Status</button>
+    </form>
+{% endblock %}

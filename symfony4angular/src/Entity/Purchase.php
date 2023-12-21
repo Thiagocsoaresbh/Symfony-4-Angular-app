@@ -20,7 +20,7 @@ class Purchase
     private ?string $customer = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $address = null; // Renomeado para $address
+    private ?string $address = null;
 
     #[ORM\Column(length: 255)]
     private ?string $city = null;

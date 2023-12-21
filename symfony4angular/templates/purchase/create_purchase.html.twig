@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Create a new purchase{% endblock %}
+
+{% block body %}
+    <h1>New Purchase</h1>
+
+    <form action="{{ path('create_purchase') }}" method="post">
+        <label for="customer">Customer:</label>
+        <input type="text" id="customer" name="customer" required>
+
+        <label for="status">Status:</label>
+        <input type="text" id="status" name="status" required>
+
+        <label for="date">Date:</label>
+        <input type="text" id="date" name="date" required>
+
+        <label for="address1">Adress:</label>
+        <input type="text" id="address1" name="address1" required>
+
+        <label for="city">City:</label>
+        <input type="text" id="city" name="city" required>
+
+        <label for="postcode">Postalcode:</label>
+        <input type="text" id="postcode" name="postcode" required>
+
+        <label for="country">Country:</label>
+        <input type="text" id="country" name="country" required>
+
+        <label for="amount">Amount:</label>
+        <input type="number" id="amount" name="amount" required>
+
+        <button type="submit">Create Purchase</button>
+    </form>
+{% endblock %}
