@@ -3,7 +3,9 @@
 doctrine:
     dbal:
         url: '%env(resolve:DATABASE_URL)%'
-        # server_version: '5.7' # Descomente e ajuste conforme necessário
+        driver: 'pdo_mysqli'
+        #url: 'sqlite:///:memory:'
+        # server_version: '5.7' # Uncomment and ajust if necessary. 
 
     orm:
         auto_generate_proxy_classes: true
@@ -21,10 +23,10 @@ doctrine:
                 alias: App
 
 # Configurações adicionais para ambientes específicos (opcional)
-# when@test:
-#     doctrine:
-#         dbal:
-#             dbname_suffix: '_test'
+when@test:
+    doctrine:
+        dbal:
+            dbname_suffix: '_test'
 # when@prod:
 #     doctrine:
 #         orm:

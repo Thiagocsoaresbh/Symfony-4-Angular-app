@@ -9,8 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
 class Purchase
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\GeneratedValue(strategy: "IDENTITY")]
+    #[ORM\Column(type: 'integer')]
     private ?int $id = null;
 
     #[ORM\Column(type: 'datetime')]
@@ -19,7 +19,7 @@ class Purchase
     #[ORM\Column(length: 255)]
     private ?string $customer = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(name: "address1", length: 255)]
     private ?string $address = null;
 
     #[ORM\Column(length: 255)]
@@ -37,9 +37,21 @@ class Purchase
     #[ORM\Column(length: 255)]
     private ?string $status = null;
 
+    #[ORM\Column(type: 'boolean')]
+    private bool $deleted = false;
+
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    private ?\DateTimeInterface $lastModified = null;
+
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function setId(int $id): self
+    {
+        $this->id = $id;
+        return $this;
     }
 
     public function getDate(): ?\DateTimeInterface
@@ -134,6 +146,30 @@ class Purchase
     public function setStatus(string $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function isDeleted(): bool
+    {
+        return $this->deleted;
+    }
+
+    public function setDeleted(bool $deleted): self
+    {
+        $this->deleted = $deleted;
+
+        return $this;
+    }
+
+    public function getLastModified(): ?\DateTimeInterface
+    {
+        return $this->lastModified;
+    }
+
+    public function setLastModified(?\DateTimeInterface $lastModified): self
+    {
+        $this->lastModified = $lastModified;
 
         return $this;
     }

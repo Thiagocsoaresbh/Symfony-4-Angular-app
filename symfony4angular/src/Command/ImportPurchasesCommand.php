@@ -35,8 +35,17 @@ class ImportPurchasesCommand extends Command
 
         foreach ($purchasesData as $purchaseData) {
             $purchase = new Purchase();
+            $purchase->setId($purchaseData['id']);
+            $purchase->setDate(new \DateTime($purchaseData['date']));
             $purchase->setCustomer($purchaseData['customer']);
+            $purchase->setAddress($purchaseData['address1']);
+            $purchase->setCity($purchaseData['city']);
+            $purchase->setPostcode($purchaseData['postcode']);
+            $purchase->setCountry($purchaseData['country']);
+            $purchase->setAmount($purchaseData['amount']);
             $purchase->setStatus($purchaseData['status']);
+            $purchase->setDeleted($purchaseData['deleted'] ?? false);
+            $purchase->setLastModified(isset($purchaseData['last_modified']) ? new \DateTime($purchaseData['last_modified']) : null);
 
             $this->entityManager->persist($purchase);
         }
