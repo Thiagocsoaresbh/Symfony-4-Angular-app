@@ -37,8 +37,15 @@ class PurchaseControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        // Adapte o ID da compra e o novo status conforme necessário
-        $client->request('PUT', '/update-purchase-status/1/shipped');
+        // Simulate creation of purchase to get the ID
+        $client->request('POST', '/create-purchase');
+        $responseData = json_decode($client->getResponse()->getContent(), true);
+        $purchaseId = $responseData['purchase_id'];
+
+        $newStatus = 'cancelled';
+
+        // Update the status of purchase that has be just created
+        $client->request('PUT', "/update-purchase-status/{$purchaseId}/{$newStatus}");
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertJson($client->getResponse()->getContent());
