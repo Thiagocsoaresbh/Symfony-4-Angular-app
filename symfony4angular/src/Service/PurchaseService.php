@@ -45,13 +45,13 @@ class PurchaseService
         $purchase->setCountry($purchaseData['country']);
         $purchase->setAmount($purchaseData['amount']);
 
-        // Tente persistir e trate erros
+        // Trying persist and deal with erros
         try {
             $this->entityManager->persist($purchase);
             $this->entityManager->flush();
             return $purchase;
         } catch (\Exception $e) {
-            // Adicione tratamento de erro aqui
+            // Treatment about error later if neede it
             return null;
         }
     }
