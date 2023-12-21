@@ -6,6 +6,7 @@ use App\Repository\CustomerRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CustomerRepository::class)]
 class Customer
@@ -16,9 +17,12 @@ class Customer
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Name is required")]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Email is required")]
+    #[Assert\Email(message: "Invalid email address")]
     private ?string $email = null;
 
     #[ORM\OneToMany(targetEntity: Purchase::class, mappedBy: "customer")]
