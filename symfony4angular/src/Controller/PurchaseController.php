@@ -13,8 +13,14 @@ class PurchaseController extends AbstractController
     public function createPurchase(PurchaseService $purchaseService): Response
     {
         $purchaseData = [
-            'customer' => 'John Doe',
-            'status' => 'Pending',
+            'customer' => 'Aphrodite Olson',
+            'status' => 'in_production',
+            'date' => '2019-12-14 19:32:45',
+            'address1' => '5104 Ipsum. Rd.',
+            'city' => 'Busan',
+            'postcode' => '778606',
+            'country' => 'Azerbaijan',
+            'amount' => 4869,
         ];
 
         $purchase = $purchaseService->createPurchase($purchaseData);

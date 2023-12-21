@@ -22,6 +22,12 @@ class PurchaseService
         $purchase = new Purchase();
         $purchase->setCustomer($purchaseData['customer']);
         $purchase->setStatus($purchaseData['status']);
+        $purchase->setDate(new \DateTime($purchaseData['date']));
+        $purchase->setAddress($purchaseData['address1']);
+        $purchase->setCity($purchaseData['city']);
+        $purchase->setPostcode($purchaseData['postcode']);
+        $purchase->setCountry($purchaseData['country']);
+        $purchase->setAmount($purchaseData['amount']);
 
         $this->entityManager->persist($purchase);
         $this->entityManager->flush();
