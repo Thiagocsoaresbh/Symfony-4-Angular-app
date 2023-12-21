@@ -1,0 +1,8 @@
+
+knp_paginator:
+    page_range: 5                  # Número de páginas exibidas no controle deslizante
+    default_options:
+        page_name: page             # Nome do parâmetro da página no URL
+        sort_field_name: sort       # Nome do parâmetro de campo de classificação no URL
+        sort_direction_name: direction # Nome do parâmetro de direção de classificação no URL
+        distinct: true  

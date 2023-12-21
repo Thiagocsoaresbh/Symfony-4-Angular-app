@@ -6,9 +6,11 @@ use App\Service\PurchaseService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 class PurchaseController extends AbstractController
 {
+    private PurchaseService $purchaseService;
     private const CREATE_PURCHASE_ROUTE = '/create-purchase';
     private const UPDATE_PURCHASE_STATUS_ROUTE = '/update-purchase-status/{purchaseId}/{newStatus}';
     private const LIST_PURCHASES_ROUTE = '/list-purchases';
@@ -46,11 +48,17 @@ class PurchaseController extends AbstractController
         return $this->json(['message' => 'Purchase status updated successfully']);
     }
 
-    #[Route(self::LIST_PURCHASES_ROUTE, name: 'list_purchases')]
-    public function listPurchases(PurchaseService $purchaseService): Response
-    {
-        $purchases = $purchaseService->getAllPurchases();
 
-        return $this->json(['purchases' => $purchases]);
+    #[Route('/list-purchases', name: 'list_purchases')]
+    public function listPurchases(Request $request): Response
+    {
+        $page = $request->query->getInt('page', 1);
+        $pageSize = $request->query->getInt('pageSize', 10);
+
+        $purchases = $this->purchaseService->getAllPurchasesPaginated($page, $pageSize);
+
+        return $this->render('purchase/list_purchases.html.twig', [
+            'purchases' => $purchases,
+        ]);
     }
 }
