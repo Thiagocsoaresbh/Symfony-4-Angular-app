@@ -1,5 +1,5 @@
 # Use an official PHP runtime as a parent image
-FROM php:7.4-apache
+FROM php:7.2-apache
 
 # Set the working directory to /app
 WORKDIR /var/www/html
@@ -20,6 +20,9 @@ RUN apt-get update \
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# Install Node.js and npm
+RUN apt-get install -y nodejs npm
 
 # Run Composer install
 RUN composer install --no-scripts --no-autoloader
